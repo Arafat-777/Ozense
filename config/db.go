@@ -4,9 +4,8 @@ import (
 	"log"
 	"ozenshe/models"
 
-	"github.com/glebarez/sqlite" // 💡 драйвер, работающий без CGO
+	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"
-
 )
 
 var DB *gorm.DB
@@ -18,5 +17,12 @@ func InitDB() {
 		log.Fatal("Ошибка подключения к БД:", err)
 	}
 
-	DB.AutoMigrate(&models.Genre{}, &models.Category{})
+	DB.AutoMigrate(
+		&models.User{},
+		&models.Age{},
+		&models.Genre{},
+		&models.Category{},
+		&models.Season{},
+		&models.Episode{},
+		&models.Screenshot{})
 }
