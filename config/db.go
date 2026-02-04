@@ -6,6 +6,7 @@ import (
 
 	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"
+
 )
 
 var DB *gorm.DB
@@ -24,5 +25,7 @@ func InitDB() {
 		&models.Category{},
 		&models.Season{},
 		&models.Episode{},
-		&models.Screenshot{})
+		&models.Screenshot{},
+		&models.Movie{},
+	)
 }

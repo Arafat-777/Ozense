@@ -53,7 +53,9 @@ func CreateMovie(c *gin.Context) {
 
 func GetMovies(c *gin.Context) {
 	var movies []models.Movie
-	config.DB.Preload("Genres").
+	config.DB.
+		Preload("Age"). // 👈 добавить это
+		Preload("Genres").
 		Preload("Categories").
 		Preload("Seasons.Episodes").
 		Preload("Screenshots").
@@ -63,17 +65,20 @@ func GetMovies(c *gin.Context) {
 
 func GetMovie(c *gin.Context) {
 	id := c.Param("id")
-	var m models.Movie
-	if err := config.DB.Preload("Genres").
+	var movie models.Movie
+	if err := config.DB.
+		Preload("Age"). // 👈 и здесь
+		Preload("Genres").
 		Preload("Categories").
 		Preload("Seasons.Episodes").
 		Preload("Screenshots").
-		First(&m, id).Error; err != nil {
+		First(&movie, id).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Not found"})
 		return
 	}
-	c.JSON(http.StatusOK, m)
+	c.JSON(http.StatusOK, movie)
 }
+
 
 func UpdateMovie(c *gin.Context) {
 	var m models.Movie
